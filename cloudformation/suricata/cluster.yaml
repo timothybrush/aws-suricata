@@ -13,9 +13,6 @@ Parameters:
   PrivateSubnet2:
     Description: The Private Subnet 2 id
     Type: String
-  PrivateSubnet3:
-    Description: The Private Subnet 3 id
-    Type: String
   Ami:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
@@ -57,7 +54,7 @@ Parameters:
       Enable rulesets from the following index: https://www.openinfosecfoundation.org/rules/index.yaml in a comma delimted list. 
       Example: et/open, sslbl/ssl-fp-blacklist, et/pro secret-code=password, etnetera/aggressive
     Type: String
-    Default: ""
+    Default: "et/open"
     
   MaxMindApiKey:
     Description: Your MaxMind API key to download the GeoLite Database. https://dev.maxmind.com/geoip/geolite2-free-geolocation-data 
@@ -66,7 +63,7 @@ Parameters:
 
   SuricataInstanceType:
     Type: String
-    Default: c5n.large
+    Default: t3.medium
 
   SuricataClusterMinSize:
     Description: The base number of Suricata containers in the cluster. Each container will have it's own EC2 instance.
@@ -76,12 +73,12 @@ Parameters:
   SuricataClusterMaxSize:
     Description: The maximum number of Suricata containers in the cluster. Each container will have it's own EC2 instance.
     Type: String
-    Default: 10
+    Default: 4
 
   SuricataCpuScalingPercentage:
     Description: ECS will scale up a new Suricata container when the service reaches this average CPU utilization.
     Type: String
-    Default: 80.0
+    Default: 90.0
 
 
 Conditions:
@@ -188,14 +185,6 @@ Resources:
       SecurityGroups: 
         - !Ref SuricataLogsEfsSecurityGroup
       SubnetId: !Ref PrivateSubnet2
-
-  SuricataLogsEfsMountTarget3:
-    Type: AWS::EFS::MountTarget
-    Properties: 
-      FileSystemId: !Ref SuricataLogsEfs
-      SecurityGroups: 
-        - !Ref SuricataLogsEfsSecurityGroup
-      SubnetId: !Ref PrivateSubnet3
 
   SuricataLogsEfsSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -410,7 +399,6 @@ Resources:
       Subnets:
         - !Ref PrivateSubnet1
         - !Ref PrivateSubnet2
-        - !Ref PrivateSubnet3
       Tags:
       - Key: Name
         Value: "Suricata GWLB"
@@ -673,7 +661,6 @@ Resources:
       VPCZoneIdentifier:
       - !Ref PrivateSubnet1
       - !Ref PrivateSubnet2
-      - !Ref PrivateSubnet3
       TargetGroupARNs:
       - !Ref TargetGroup
       Tags:

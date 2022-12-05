@@ -3,10 +3,10 @@
 		"PcapLogRententionS3": "5",
 		"DefaultLogRententionCloudWatch": "3",
 		"EveLogRententionCloudWatch": "30",
-		"SuricataRulesets": "",
+		"SuricataRulesets": "et/open",
 		"MaxMindApiKey": "",
-		"SuricataInstanceType": "t3.large",
-		"SuricataClusterMaxSize": "10",
+		"SuricataInstanceType": "t3.medium",
+		"SuricataClusterMaxSize": "4",
 		"SuricataClusterMinSize": "2",
 		"SuricataCpuScalingPercentage": "80"
     }
