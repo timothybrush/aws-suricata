@@ -18,6 +18,4 @@ RUN groupadd --gid 1000 suricata && \
 VOLUME /var/lib/suricata/rules
 VOLUME /usr/local/share/GeoLite2/
 
-#ENTRYPOINT ["/docker-entrypoint.sh"]
-ENTRYPOINT ["/bin/bash"]
-
+ENTRYPOINT ["/docker-entrypoint.sh"]

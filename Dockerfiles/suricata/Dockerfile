@@ -36,5 +36,4 @@ RUN  groupadd --gid 1000 suricata && \
 COPY --chown=suricata:suricata ./etc/suricata/ /etc/suricata/
 COPY --chown=suricata:suricata static.rules /var/lib/suricata/static/rules/static.rules
 
-# ENTRYPOINT ["/docker-entrypoint.sh"]
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
